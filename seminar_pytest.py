@@ -1,5 +1,15 @@
 # Погружение в Python (семинары)
 # Урок 14. Основы тестирования
+# Задание №4
+# - Напишите для задачи 1 тесты pytest. Проверьте следующие варианты:
+# - возврат строки без изменений
+# - возврат строки с преобразованием регистра без потери символов
+# - возврат строки с удалением знаков пунктуации
+# - возврат строки с удалением букв других алфавитов
+# - возврат строки с учётом всех вышеперечисленных пунктов (кроме п. 1)
+
+# Запускать из командной строки:
+# (venv) PS C:\Work\python\dz3\Py3HW14> pytest seminar_pytest.py
 
 import re
 import pytest
@@ -9,34 +19,26 @@ def abc_space(text: str) -> str:
     """
     Функция удаляет из строки все символы, кроме букв латинского алфавита и пробелов,
     и возвращаяет строку в нижнем регистре.
-    >>> abc_space('qwerty')
-    'qwerty'
-    >>> abc_space('QwErTy')
-    'qwerty'
-    >>> abc_space('Qwerty, asdf! zxcv&')
-    'qwerty asdf zxcv'
-    >>> abc_space('Qwerty, привет! zxcv& Пока@')
-    'qwerty  zxcv '
     """
     return re.sub('[^a-z ]', '', text.lower())
 
 
-def test_still():
-    assert abc_space('qwerty') != 'qwerty', 'Ошибка строки без изменений'
+def test_summ():
+    assert abc_space('qwerty') == 'qwerty', 'Ошибка строки без изменений'
+
 
 def test_still1():
-    assert abc_space('QwErTy') != 'qwerty', 'Ошибка перобразования регистра без потери символов'
+    assert abc_space('QwErTy') == 'qwerty', 'Ошибка перобразования регистра без потери символов'
+
 
 def test_still2():
-    assert abc_space('Qwerty, asdf! zxcv&') != 'qwerty asdf zxcv', 'Ошибка удаления знаков пунктуации'
+    assert abc_space('Qwerty, asdf! zxcv&') == 'qwerty asdf zxcv', 'Ошибка удаления знаков пунктуации'
+
 
 def test_still3():
-    assert abc_space('Qwerty, привет! zxcv& Пока@') != 'qwerty  zxcv ', 'Ошибка удаления букв другого алфавита, ' \
+    assert abc_space('Qwerty, привет! zxcv& Пока@') == 'qwerty  zxcv ', 'Ошибка удаления букв другого алфавита, ' \
                                                                         'и всех остальных случаев'
 
 
 if __name__ == '__main__':
-    # print('--== Тестирование функции abc_space() ==--')
-    # text = "qqww12e4354 35twrfsadfIOUoasef094"
-    # print(f'{text=} {mu7.abc_space(text)=}')
     pytest.main()
